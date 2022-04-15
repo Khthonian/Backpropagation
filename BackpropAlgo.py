@@ -74,20 +74,20 @@ def outputCalc(net):
 def weightReset(error, weights, inputData):
     deltaWeights = []
     deltaWeights.append(learningRate * error * bias)
-    for x in range(1, len(weights) - 1):
+    for x in range(0, 3):
         deltaWeights.append(learningRate * error * float(inputData[x]))
     weights[0] += deltaWeights[0]
-    for x in range(1, len(weights) - 1):
+    for x in range(1, len(weights)):
         weights[x] += deltaWeights[x]
 
 # Hidden Weight Backpropragation
 def hiddenWeightReset(error, weights, inputData):
     deltaWeights = []
     deltaWeights.append(learningRate * error * bias)
-    for x in range(1, len(weights) - 1):
+    for x in range(0, 3):
         deltaWeights.append(learningRate * error * float(hiddenInputData[x]))
     weights[0] += deltaWeights[0]
-    for x in range(1, len(weights) - 1):
+    for x in range(1, len(weights)):
         weights[x] += deltaWeights[x]
 
 # Output the weights
@@ -95,13 +95,14 @@ def printWeights(interationWeights):
     neuronLabels = [4, 5, 6, 7, 8]
     for x in range(0, 5):
         print("Weights for neuron " + str(neuronLabels[x]) + ":")
-        print(str(iterationWeights[x]))
-        print("")
+        for y in range(0, 4):
+            print(str(round(iterationWeights[x][y], 3)))
+            print("")
 
 
 # Train the neural network
 while epochs < epochMax:
-    trainSamples = [0, 1, 2]
+    trainSamples = [0, 1, 3, 4]
     for x in trainSamples:
         # Determine expected outputs
         expOutputN7 = inputData[x][1][0]
@@ -128,12 +129,10 @@ while epochs < epochMax:
         hiddenInputData[3] = neuron6Output
 
         # Neuron 7
-        neuron7Net = netCalc(neuron7Weights, activeInputData)
-        neuron7Output = outputCalc(neuron7Net)
+        neuron7Output = netCalc(neuron7Weights, activeInputData)
 
         # Neuron 8
-        neuron8Net = netCalc(neuron8Weights, activeInputData)
-        neuron8Output = outputCalc(neuron8Net)
+        neuron8Output = netCalc(neuron8Weights, activeInputData)
 
         # Calculate errors for neurons 7 & 8
         neuron7Error = expOutputN7 - neuron7Output
@@ -151,10 +150,10 @@ while epochs < epochMax:
         hiddenWeightReset(neuron7Error, neuron7Weights, activeInputData)
         hiddenWeightReset(neuron8Error, neuron8Weights, activeInputData)
 
-    trainingLoss = ((1/3) * ((neuron4Error**2) + (neuron5Error**2) + (neuron6Error**2) + (neuron7Error**2) + (neuron8Error**2)))
+    trainingLoss = ((1/len(trainSamples)) * ((neuron4Error**2) + (neuron5Error**2) + (neuron6Error**2) + (neuron7Error**2) + (neuron8Error**2)))
     iterationWeights = [neuron4Weights, neuron5Weights, neuron6Weights, neuron7Weights, neuron8Weights]
 
-    validateSamples = [4, 5, 6]
+    validateSamples = [2, 5]
     for x in trainSamples:
         # Determine expected outputs
         expOutputN7 = inputData[x][1][0]
@@ -181,12 +180,10 @@ while epochs < epochMax:
         hiddenInputData[3] = neuron6Output
 
         # Neuron 7
-        neuron7Net = netCalc(neuron7Weights, activeInputData)
-        neuron7Output = outputCalc(neuron7Net)
+        neuron7Output = netCalc(neuron7Weights, activeInputData)
 
         # Neuron 8
-        neuron8Net = netCalc(neuron8Weights, activeInputData)
-        neuron8Output = outputCalc(neuron8Net)
+        neuron8Output = netCalc(neuron8Weights, activeInputData)
 
         # Calculate errors for neurons 7 & 8
         neuron7Error = expOutputN7 - neuron7Output
@@ -197,7 +194,7 @@ while epochs < epochMax:
         neuron5Error = neuron5Output * (1 - neuron5Output) * ((neuron7Weights[2] * neuron7Error) + (neuron8Weights[2] * neuron8Error))
         neuron6Error = neuron6Output * (1 - neuron6Output) * ((neuron7Weights[3] * neuron7Error) + (neuron8Weights[3] * neuron8Error))
 
-    validateLoss = ((1/3) * ((neuron4Error**2) + (neuron5Error**2) + (neuron6Error**2) + (neuron7Error**2) + (neuron8Error**2)))
+    validateLoss = ((1/len(validateSamples)) * ((neuron4Error**2) + (neuron5Error**2) + (neuron6Error**2) + (neuron7Error**2) + (neuron8Error**2)))
     print("Epoch " + str(epochs + 1))
     printWeights(iterationWeights)
     epochs += 1
@@ -213,8 +210,9 @@ z_data.extend([graphPlot[i][2] for i in range(0, len(graphPlot))])
 fig, ax = plt.subplots()
 fig.suptitle("Learning Curve")
 ax.set(xlabel="Epoch", ylabel= "Squared Error")
-ax.plot(x_data, y_data, color="g")
-ax.plot(x_data, z_data, color='r')
+ax.plot(x_data, y_data, color="g", label="Training Loss")
+ax.plot(x_data, z_data, color='r', label="Validation Loss")
+ax.legend()
 plt.show()
 
 # Test the neural network
@@ -238,12 +236,10 @@ hiddenInputData[2] = neuron5Output
 hiddenInputData[3] = neuron6Output
 
 # Neuron 7
-neuron7Net = netCalc(neuron7Weights, activeInputData)
-neuron7Output = outputCalc(neuron7Net)
+neuron7Output = netCalc(neuron7Weights, activeInputData)
 
 # Neuron 8
-neuron8Net = netCalc(neuron8Weights, activeInputData)
-neuron8Output = outputCalc(neuron8Net)
+neuron8Output = netCalc(neuron8Weights, activeInputData)
 
 print("Output: " + str(neuron7Output))
 print("Softmax: " + str(softmax(neuron7Output, neuron8Output)) + ", " + str(softmax(neuron8Output, neuron7Output)))
