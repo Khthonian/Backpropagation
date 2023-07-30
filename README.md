@@ -1,4 +1,4 @@
-# Backpropagation
+# Neural Network
 
 This Python script implements a neural network for training and validating a set of input data. It aims to optimise the network's weights through backpropagation to minimise the squared error between the predicted outputs and the actual target outputs.
 
