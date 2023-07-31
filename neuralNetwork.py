@@ -122,7 +122,8 @@ learningRate = 0.1
 
 network = Network(features, truth, hiddenLayerSize, learningRate)
 
-epochs = 1000
+# Epoch Counter
+epochs = int(input("How many epochs should I train for?: "))
 network.train(epochs)
 
 # Perform forward step for the first input
