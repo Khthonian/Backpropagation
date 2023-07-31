@@ -15,7 +15,7 @@ class Neuron:
         net = self.weights[0] * self.bias
         for x in range(1, len(self.weights)):
             net += self.weights[x] * self.input[x - 1]
-        self.output = 1 / (1 + math.exp(-net)) # Calculate output when method is called
+        self.output = 1 / (1 + math.exp(-net))
         return self.output
     
 class Network:
@@ -25,14 +25,17 @@ class Network:
         self.nodeCount = 0
         self.hiddenSize = hiddenSize
         self.hiddenLayer = self.populateNodes(hiddenSize, len(input[0]))
-        self.outputLayer = self.populateNodes(len(truth[0]), hiddenSize)  # Output layer size should match truth[0] size
+        # Output layer size should match truth[0] size
+        self.outputLayer = self.populateNodes(len(truth[0]), hiddenSize)
         self.learningRate = learningRate
 
     def populateNodes(self, layerSize, numInputs):
         nodes = []
         for i in range(layerSize):
-            weights = [random.uniform(-1, 1) for _ in range(numInputs + 1)]  # +1 for the bias weight
-            node = Neuron(f"Node {self.nodeCount}", weights, [0] * numInputs, 0)  # Initialise input with zeros
+            # +1 for the bias weight
+            weights = [random.uniform(-1, 1) for _ in range(numInputs + 1)]
+            # Initialise input with zeros
+            node = Neuron(f"Node {self.nodeCount}", weights, [0] * numInputs, 0)
             nodes.append(node)
             self.nodeCount += 1
         return nodes
@@ -111,6 +114,12 @@ def loadData(fileName):
             data.append((features, targets))
     return data
 
+# Softmax function
+def softmax(x, y):
+    a = math.exp(x) / (math.exp(x) + math.exp(y))
+    b = math.exp(y) / (math.exp(x) + math.exp(y))
+    return {a, b}
+
 # Example usage:
 data = loadData("data-CMP2020M-item1-train.txt")
 
@@ -128,5 +137,6 @@ network.train(epochs)
 
 # Perform forward step for the first input
 output = network.forward(test)
-print("Output for the first input:", output)
-
+print("Output:", output[0])
+softmaxOne, softmaxTwo = softmax(output[0], output[1])
+print("Softmax: " + str(softmaxOne) + ", " + str(softmaxTwo))
