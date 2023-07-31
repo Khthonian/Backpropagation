@@ -1,9 +1,7 @@
 # Neural Network
-
 This Python script implements a neural network for training and validating a set of input data. It aims to optimise the network's weights through backpropagation to minimise the squared error between the predicted outputs and the actual target outputs.
 
 ## Description
-
 This neural network implementation uses a single hidden layer and output layer. The number of neurons in the hidden layer is defined by the user; the default value of neurons is 3. Each neuron is defined by the `Neuron` class, which allows internal calculation of outputs.
 
 The `Network` class is used to define the entire structure of the neural network and the neurons within. This class stores various information, including lists of the neurons in both the hidden and output layers. The methods within this class are responsible for driving the neural network tasks, such as the forward pass, the error calculation, and the backpropagation.
@@ -11,9 +9,7 @@ The `Network` class is used to define the entire structure of the neural network
 Data can either be given to the network as a list or loaded into the network from a text file, also as a list.
 
 ## Usage
-
 To use the script, follow these steps:
-
 1. Prepare your input data file in the following format: each line contains space-separated input features and target outputs. An example can be seen below, from `data-CMP2020M-item1-train.txt`:
 ```
 0.50 1.00 0.75	1 0
@@ -31,5 +27,7 @@ To use the script, follow these steps:
 The script is designed such that the user can adjust the parameters to best fit their data and preferred architecture.
 
 ## Miscellaneous
-
 This implementation is an improvement upon a prior university assignment. To see the original code, `BackpropAlgo.py`, submitted in the assignment, click [here](https://github.com/Khthonian/Neural-Network/releases/tag/v1.0).
+
+## License
+This project is licensed under the [MIT License](LICENSE.md).
