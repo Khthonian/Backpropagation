@@ -110,6 +110,8 @@ while epochs < epochMax:
 
         # Determine inputs
         activeInputData = inputData[x][0]
+
+        print(activeInputData)
         
         # Neuron 4
         neuron4Net = netCalc(neuron4Weights, activeInputData)
@@ -236,10 +238,12 @@ hiddenInputData[2] = neuron5Output
 hiddenInputData[3] = neuron6Output
 
 # Neuron 7
-neuron7Output = netCalc(neuron7Weights, activeInputData)
+neuron7Net = netCalc(neuron7Weights, activeInputData)
+neuron7Output = outputCalc(neuron7Net)
 
 # Neuron 8
-neuron8Output = netCalc(neuron8Weights, activeInputData)
+neuron8Net = netCalc(neuron8Weights, activeInputData)
+neuron8Output = outputCalc(neuron8Net)
 
 print("Output: " + str(neuron7Output))
 print("Softmax: " + str(softmax(neuron7Output, neuron8Output)) + ", " + str(softmax(neuron8Output, neuron7Output)))
