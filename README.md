@@ -2,62 +2,34 @@
 
 This Python script implements a neural network for training and validating a set of input data. It aims to optimise the network's weights through backpropagation to minimise the squared error between the predicted outputs and the actual target outputs.
 
-## Setup
-
-Make sure you have Python installed on your system to run this script successfully. Additionally, the script requires the `matplotlib` module, which can be installed using the following command:
-
-`pip install matplotlib`
-
-
 ## Description
 
-The script consists of several functions to perform the training and validation of the neural network. Here is an overview of each function's role:
+This neural network implementation uses a single hidden layer and output layer. The number of neurons in the hidden layer is defined by the user; the default value of neurons is 3. Each neuron is defined by the `Neuron` class, which allows internal calculation of outputs.
 
-### 1. `loadData(fileName)`
+The `Network` class is used to define the entire structure of the neural network and the neurons within. This class stores various information, including lists of the neurons in both the hidden and output layers. The methods within this class are responsible for driving the neural network tasks, such as the forward pass, the error calculation, and the backpropagation.
 
-This function reads data from the specified file and prepares it for training. It returns a list of tuples, where each tuple contains the input features and target outputs for a particular example.
-
-### 2. Neural Network Initialisation
-
-Before training, the script sets up the neural network with the following components:
-
-- Learning rate (`learningRate`): A hyperparameter used to adjust the weights during training.
-- Bias (`bias`): A fixed value added to the net calculation for each neuron.
-- Weights for each neuron: Initial weights for five neurons (4, 5, 6, 7, and 8) in the network.
-
-### 3. Sigmoid and Softmax Functions
-
-The `sigmoid(x)` and `softmax(x, y)` functions compute the sigmoid and softmax activations, respectively, for the neural network.
-
-### 4. Net Calculation Functions
-
-The `netCalc(weights, inputData)` and `hiddenNetCalc(weights)` functions calculate the net input for neurons in the output and hidden layers, respectively.
-
-### 5. Output Calculation
-
-The `outputCalc(net)` function computes the output for a neuron using the sigmoid activation function.
-
-### 6. Weight Backpropagation Functions
-
-The `weightReset(error, weights, inputData)` and `hiddenWeightReset(error, weights, inputData)` functions adjust the weights of the neurons based on the calculated errors during backpropagation.
-
-### 7. Training and Validation
-
-The script performs training for a specified number of epochs (`epochMax`). It updates the network weights using the training samples and calculates the training loss. The validation loss is computed using a separate set of samples. The neural network's learning curve is plotted to visualise the loss reduction over epochs.
-
-### 8. Testing
-
-Finally, the neural network is tested using a set of test input data (`testInputData`). The output and softmax probabilities for the test data are displayed.
+Data can either be given to the network as a list or loaded into the network from a text file, also as a list.
 
 ## Usage
 
 To use the script, follow these steps:
 
-1. Ensure the required modules are installed using `pip install matplotlib`.
-2. Prepare your input data file in the following format: each line contains space-separated input features and target outputs (e.g., `0.1 0.2 0.3 0.4 0.5 0.6`).
-3. Adjust hyperparameters such as the learning rate and initial weights, if necessary.
-4. Run the script and provide the number of epochs for training when prompted.
-5. The script will train the neural network and display the learning curve.
-6. After training, the neural network will be tested on the provided test data, and the outputs and softmax probabilities will be shown.
+1. Prepare your input data file in the following format: each line contains space-separated input features and target outputs. An example can be seen below, from `data-CMP2020M-item1-train.txt`:
+```
+0.50 1.00 0.75	1 0
+1.00 0.50 0.75	1 0
+1.00 1.00 1.00	1 0
+-0.01 0.50 0.25	0 1
+0.50 -0.25 0.13	0 1
+0.01 0.02 0.05	0 1
+```
+2. Adjust hyperparameters such as the learning rate and initial weights, if necessary.
+3. Run the script and provide the number of epochs for training when prompted.
+4. The script will train the neural network.
+5. After training, the neural network will be tested on the provided test data, and the outputs and softmax probabilities will be shown. This is done using the `forward` method from the `Network` class.
 
-Feel free to modify the script to suit your specific data and neural network architecture.
+The script is designed such that the user can adjust the parameters to best fit their data and preferred architecture.
+
+## Miscellaneous
+
+This implementation is an improvement upon a prior university assignment. To see the original code, `BackpropAlgo.py`, submitted in the assignment, click [here](https://github.com/Khthonian/Neural-Network/releases/tag/v1.0).
